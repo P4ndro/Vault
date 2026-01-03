@@ -20,6 +20,10 @@ export const getUserById = async(id: string) =>{
 
 
 export const updateUser = async(id: string,data: Partial<NewUser>) => {
+    const ExistingUser = await getUserById(id);
+    if(!ExistingUser){
+        throw new Error("User not found");
+    }
     const [user] = await db.update(users).set(data).where(eq(users.id,id)).returning();
     return user;
 
@@ -27,11 +31,11 @@ export const updateUser = async(id: string,data: Partial<NewUser>) => {
 // upsert is used to create or update a user
 export const upsertUser = async(data: NewUser) => {
 
-    const ExistingUser = await getUserById(data.id);
-    if(ExistingUser){
-        return updateUser(data.id,data);
-    }
-    return createUser(data);
+    const [user] = await db.insert(users).values(data).onConflictDoUpdate({
+        target: users.id,
+        set: data,
+    }).returning();
+    return user;
 };
 //products queries
 
