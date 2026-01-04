@@ -8,8 +8,19 @@ const router = Router();
 router.get("/", productController.getAllProducts);
 
 
+router.get("/my", requireAuth,productController.getMyproduct);
 
 
+router.get("/:id", productController.getProductById);
+
+
+router.post("/",requireAuth,productController.createProduct);
+
+
+router.put("/:id",requireAuth,productController.updateProduct);
+
+
+router.put("/:id", requireAuth,productController.deleteProduct)
 
 
 export default router;

@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { db } from ".";
 import { comments, products, users, type NewUser, type NewProduct, type NewComment } from "./schema";
 
@@ -56,7 +56,7 @@ export const updateProduct = async(id: string,data: Partial<NewProduct>) => {
 export const getAllProducts = async() => {
     return db.query.products.findMany({
         with:{users:true},
-        orderBy: (products, {desc}) => [desc(products.createdAt)]
+        orderBy: (fields, { desc }) => [desc(fields.createdAt)]
     });
     
 };
@@ -66,7 +66,7 @@ export const getProductsById = async (id: string) => {
         where: eq(products.id,id),
         with:{users:true,
         comments:{with:{users:true},
-        orderBy: (comments, {desc}) => [desc(comments.createdAt)]},
+        orderBy: (fields, { desc }) => [desc(fields.createdAt)]},
         }
     });
 
@@ -75,7 +75,7 @@ export const getProductsByUserId = async (userId: string) => {
     return db.query.products.findMany({
         where: eq(products.userId,userId),
         with:{users:true},
-        orderBy: (products, {desc}) => [desc(products.createdAt)]
+        orderBy: (fields, { desc }) => [desc(fields.createdAt)]
     });
 };
 
@@ -107,7 +107,7 @@ export const getCommentsById = async (id: string) => {
     return db.query.comments.findFirst({
         where: eq(comments.id,id),
         with:{users:true},
-        orderBy: (comments, {desc}) => [desc(comments.createdAt)]
+        orderBy: (fields, { desc }) => [desc(fields.createdAt)]
     });
 };
 
