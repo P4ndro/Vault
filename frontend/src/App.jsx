@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { SignedIn, SignedOut, SignInButton, SignOutButton } from '@clerk/clerk-react'
+
 
 function App() {
   return (
@@ -10,6 +12,9 @@ function App() {
         Click here
 
       </button>
+     
+      
+      
     </div>
   );
 }
