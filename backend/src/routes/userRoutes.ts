@@ -5,7 +5,7 @@ import { requireAuth } from "@clerk/express";
 
 const router = Router();
 
-// api/users/sync user from clerk to DB
+
 
 router.post("/sync", requireAuth,syncUser);
 

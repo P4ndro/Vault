@@ -125,7 +125,6 @@ export const updateProduct = async (req:Request, res:Response) =>{
     }
 
 };
-
 export const deleteProduct = async (req:Request, res:Response) => {
     try {
         const{ userId} = getAuth(req);
