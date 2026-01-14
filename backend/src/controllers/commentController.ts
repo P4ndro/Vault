@@ -53,7 +53,14 @@ export const deleteComment = async (req: Request, res: Response) => {
   }
 };
 
+export const getCommentsByProductId = async (req: Request, res: Response) => {
+  try {
+    const {productId} = req.params;
+    const comments = await queries.getCommentsById(productId);
 
-
-
-
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Error getting comments by product id:", error);
+    res.status(500).json({ error: "Failed to get comments by product id" });
+  }
+};
